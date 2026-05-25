@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fountain Reader</title>
+  <script src="https://cdn.jsdelivr.net/gh/mattdaly/Fountain.js@master/fountain.js"></script>
+  
+  <style>
+    @import url( 'https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap' );
+    body {
+      background: #f0f0f0;
+      font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+      color: #111;
+      margin: 0;
+    }
+    p, h4 { margin: 0; }
+    #screenplay {
+      background: white;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 60px 80px;
+      box-shadow: 0 4px 12px rgba( 0, 0, 0, 0.15 );
+      border: 1px solid #ddd;
+    }
+    
+    #screenplay * {
+      position: relative;
+      display: block;
+    }
+    #screenplay > .section {
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 2em 0;
+    }
+    #screenplay > .dialogue {
+      max-width: 50%;
+      margin: 2em 0;
+      margin-left: 25%;
+    }
+    #screenplay > .dialogue h4 {
+      max-width: 80%;
+      padding-left: 20%;
+      text-transform: uppercase;
+    }
+    #screenplay > .dialogue p {
+    }
+    #screenplay > .dialogue .parenthetical {
+      max-width: 90%;
+      padding-left: 10%;
+    }
+    #screenplay > p {
+      margin: 1em 0;
+    }
+    #screenplay > .transition {
+      text-align: right;
+      text-transform: uppercase;
+      margin: 2em 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="screenplay">Loading script...</div>
+
+  <script>
+    const screenplay = document.getElementById( 'screenplay' );
+    const urlParams = new URLSearchParams( window.location.search );
+    const scriptUrl = urlParams.get( 'url' );
+
+    if ( scriptUrl ) {
+      fetch( scriptUrl )
+        .then( response => {
+          if ( !response.ok ) throw new Error( "Could not fetch the source file." );
+          return response.text();
+        } )
+        .then( fountainText => {
+          const output = fountain.parse( fountainText );
+          
+          let fullContent = "";
+          if ( output.html.title_page ) {
+            fullContent += output.html.title_page + "<hr style='border: none; border-top: 1px dashed #ccc; margin: 40px 0;'>";
+          }
+          fullContent += output.html.script;
+
+          screenplay.innerHTML = fullContent;
+        } )
+        .catch( err => {
+          screenplay.innerText = "Parsing Error: " + err.message;
+        } );
+    } else {
+      screenplay.innerText = "Error: Please pass a script link via the URL parameters. Example: https://liledix4.github.io/fountainreader?url=https://example.org/script.fountain";
+    }
+  </script>
+</body>
+</html>
