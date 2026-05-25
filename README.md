@@ -1,4 +1,4 @@
-# fountainreader
+# Fountain Reader
 
 Quick and simple reader for Fountain scripts.
 
