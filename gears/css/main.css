@@ -89,7 +89,6 @@ body.chat-format #screenplay > .section {
 }
 body.chat-format #screenplay > .dialogue {
   background-color: white;
-  border: 1px solid #ddd;
   border-radius: 20px;
   border-bottom-left-radius: 0;
   padding: 10px;
@@ -97,8 +96,12 @@ body.chat-format #screenplay > .dialogue {
   margin: .25em 0;
 }
 body.chat-format #screenplay > .dialogue h4 {
+  display: inline-block;
+  border-radius: 10px;
+  background-color: #00000011;
   text-transform: uppercase;
   font-size: .75em;
+  padding: 5px 10px;
 }
 body.chat-format #screenplay > .dialogue p {
 }
@@ -113,7 +116,6 @@ body.chat-format #screenplay > p {
   max-width: 80%;
   margin: .25em auto;
   background-color: #00000011;
-  border: 1px solid #00000022;
   border-radius: 10px;
   padding: 10px;
 }
